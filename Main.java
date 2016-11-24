@@ -1,6 +1,8 @@
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
@@ -51,7 +53,7 @@ public class Main {
         try (ZipOutputStream zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(archiveName + ".zip")))) {
             for (File file : files) {
                 zos.putNextEntry(new ZipEntry(file.getName()));
-                zos.write(file.toString().getBytes());
+                zos.write(Files.readAllBytes(Paths.get(file.getPath())));
                 zos.closeEntry();
             }
         } catch (java.io.IOException e) {
